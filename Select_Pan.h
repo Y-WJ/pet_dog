@@ -1,42 +1,67 @@
 #pragma   once  
-#define LINELIST Select_Pan
-
+//#define LINELIST Select_Pan
+//DATA LIST------------------------------------------------------------------------
 struct LINE
 {
 	POINT coordinate;
 	LINE *next;
 };
 
+struct LINELIST
+{
+	LINE StartPoint;
+	LINELIST *next;
+};
 
+struct RECTLIST
+{
+	POINT xPoint;
+	POINT yPoint;
+	RECTLIST *next;
+};
+
+//CLASS PAN---------------------------------------------------------------------
 class Select_Pan
 {
 private:
-	LINE StartPoint;
-	LINELIST *next;
+	LINELIST Line;
+	LINELIST *pLine;
+	LINE *pPoint;
 public:
 	bool MouseMove(HWND);
 	bool LButtonUp();
 	bool LButtonDown();
 	bool Paint(HDC);
 	bool CommondErase();
+	Select_Pan();
 };
 
+//CLASS RECT------------------------------------------------------------------------
 class Select_Rect
 {
 private:
-	POINT xPoint;
-	POINT yPoint;
-	Select_Rect *next;
+	RECTLIST Rect;
+	RECTLIST *pRect;
 public:
 	bool MouseMove(HWND);
 	bool LButtonUp();
 	bool LButtonDown();
 	bool Paint(HDC);
 	bool CommondErase();
+	Select_Rect();
 };
 
-static LINELIST Line,*pLine=&Line;
-static LINE *pPoint;
-static Select_Rect Rect,*pRect=&Rect;
-
-
+//CLASS LINE-----------------------------------------------------------------------
+class Select_Line
+{
+private:
+	RECTLIST Line;
+	RECTLIST *pLine;
+public:
+	bool MouseMove(HWND);
+	bool LButtonUp();
+	bool LButtonDown();
+	bool Paint(HDC);
+	bool CommondErase();
+	Select_Line();
+};

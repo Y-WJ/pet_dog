@@ -134,11 +134,13 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 //
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
+//STATIC TOOL------------------------------------- 
 	static Select_Pan Pan;
-	static Select_Rect Rec;
+	static Select_Rect Rect;
+	static Select_Line Line;
+//-------------------------------------------------
 	int wmId, wmEvent;
-	static RECT rect_custom;
-//	LPPOINT OrgPoint;
+//	static RECT rect_custom;
 	PAINTSTRUCT ps;
 	HDC hdc;
 	TCHAR szHello[MAX_LOADSTRING];
@@ -152,6 +154,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		case WM_COMMAND:
 			wmId    = LOWORD(wParam); 
 			wmEvent = HIWORD(wParam);
+			if(wmId>1&&wmId<=WC.Button_Number)
+				WC.Button_Select=wmId;
 			// Parse the menu selections:
 			switch (wmId)
 			{
@@ -163,14 +167,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				   break;
 				case 1:
 					Pan.CommondErase();
-					Rec.CommondErase();
+					Rect.CommondErase();
+					Line.CommondErase();
 					InvalidateRect(hWnd,NULL,1);
-					break;
-				case 2:
-					WC.Button_Select=2;
-					break;
-				case 3:
-					WC.Button_Select=3;
 					break;
 				default:
 				   return DefWindowProc(hWnd, message, wParam, lParam);
@@ -185,23 +184,27 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 //			RECT rt;
 //			GetClientRect(hWnd, &rt);
 			Pan.Paint(hdc);
-			Rec.Paint(hdc);
+			Rect.Paint(hdc);
+			Line.Paint(hdc);
 			EndPaint(hWnd, &ps);
 			break;
 		case WM_LBUTTONDOWN:
 			WC.WC_LButtonDown(lParam);
 			Pan.LButtonDown();
-			Rec.LButtonDown();
+			Rect.LButtonDown();
+			Line.LButtonDown();
 			break;
 		case WM_MOUSEMOVE:
 			WC.WC_MouseMove(lParam);
 			Pan.MouseMove(hWnd);
-			Rec.MouseMove(hWnd);
+			Rect.MouseMove(hWnd);
+			Line.MouseMove(hWnd);
 			break;
 		case WM_LBUTTONUP:
 			WC.WC_LButtonUp(lParam);
 			Pan.LButtonUp();
-			Rec.LButtonUp();
+			Rect.LButtonUp();
+			Line.LButtonUp();
 			break;
 		case WM_DESTROY:
 			PostQuitMessage(0);

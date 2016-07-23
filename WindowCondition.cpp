@@ -16,23 +16,18 @@ ButtonList[]=
 	SS_ETCHEDHORZ,		TEXT(""),		0,	0,	1500,	25,						//	0
 	BS_DEFPUSHBUTTON,	TEXT("D"),		1,	1,	20,	22,							//	1
 	BS_DEFPUSHBUTTON,	TEXT("P"),		27,	1,	20,	22,							//	2
-	BS_DEFPUSHBUTTON,	TEXT("R"),		53,	1,	20,	22,							//	3
+	BS_DEFPUSHBUTTON,	TEXT("R"),		48,	1,	20,	22,							//	3
+	BS_DEFPUSHBUTTON,	TEXT("L"),		69,	1,	20,	22,							//	4
 };
 
 #define ButtonNum (sizeof ButtonList/sizeof ButtonList[0])
 static HWND ButtonHwnd[ButtonNum];
 
 //----------------------------------------------------------------------------
-void WindowCondition::Init()
-{
-}
-
 bool WindowCondition::CreatWindow(HWND hWnd,LPARAM lParam)
 {	
 	int i;
-//	RECT rect;
-//	GetClientRect(hWnd, &rect);
-//	x=rect.right;
+	WC.Button_Number=ButtonNum;
 	ButtonHwnd[0]=CreateWindow(TEXT("button"),
 							ButtonList[0].ButtonText,
 							WS_CHILD|WS_VISIBLE|ButtonList[0].ButtonStyle,
@@ -51,7 +46,6 @@ bool WindowCondition::CreatWindow(HWND hWnd,LPARAM lParam)
 
 bool WindowCondition::DrawItem(LPARAM lParam)
 {
-	int i;
 	LPDRAWITEMSTRUCT pdi;
 	pdi=(LPDRAWITEMSTRUCT)lParam;
 	FillRect(pdi->hDC,&pdi->rcItem,(HBRUSH)GetStockObject(GRAY_BRUSH));
