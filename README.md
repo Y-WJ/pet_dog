@@ -1,3 +1,3 @@
 # pet_dog
-WIN32 GUI practition
+WINDOWS GUI 
 no intruduction
